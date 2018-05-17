@@ -20,6 +20,79 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    void createActions();
+    void createMenus();
+    void createToolBars();
+    void createStatusBar();
+
+    void createDockPoints();
+    void createDockGroups();
+    void createDockProjects();
+
+    void readSettings();
+    void writeSettings();
+
+
+
+    QMenu *mFileMenu;
+       QMenu *mEditMenu;
+        //! Database menu
+        QMenu * mDatabaseMenu;
+        QMenu * mDatabaseMenuPoints;
+        QMenu * mDatabaseMenuGroups;
+        QMenu * mDatabaseMenuProjects;
+
+        //QMenu *mPluginsMenu;
+        QMenu *mHelpMenu;
+        //! Popup menu
+        QMenu * mPopupMenu;
+        //! Top level plugin menu
+        QMenu *mPluginMenu;
+
+        /// Toolbars
+        QToolBar *mFileToolBar;
+        QToolBar *mEditToolBar;
+        /// Plugins
+        QToolBar *mPluginToolBar;
+
+        /// Docks
+        QDockWidget *mDockPoints;
+        QDockWidget *mDockGroups;
+        QDockWidget *mDockProjects;
+        /// Trees
+        //QTreeView *mGroupsTree;
+        //QTreeView *mProjectsTree;
+
+        ///Actions
+        QAction *mActionNew;
+        QAction *mActionOpen;
+        QAction *mActionSave;
+        QAction *mActionSaveAs;
+        QAction *mActionClose;
+        QAction *mActionExit;
+        QAction *mActionCut;
+        QAction *mActionCopy;
+        QAction *mActionPaste;
+        QAction *mActionShowPluginManager;
+
+        QAction *mActionAbout;
+        QAction *mActionAboutQt;
+
+        //Database basic actions
+        QAction *mActionDBPointCreate;
+        QAction *mActionDBPointEdit;
+        QAction *mActionDBPointDelete;
+
+    QAction *mActionDBGroupCreate;
+        QAction *mActionDBGroupEdit;
+        QAction *mActionDBGroupDelete;
+
+        QAction *mActionDBProjectCreate;
+        QAction *mActionDBProjectEdit;
+        QAction *mActionDBProjectDelete;
+
+
 };
 
 #endif // MAINWINDOW_H
