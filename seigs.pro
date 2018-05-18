@@ -4,9 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui charts
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+# Charts
+QT       += charts
 
 TARGET = seigs
 TEMPLATE = app

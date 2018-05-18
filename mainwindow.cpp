@@ -64,6 +64,16 @@ void MainWindow::createActions()
   mActionExit->setStatusTip(tr("Exit the application"));
   connect(mActionExit, &QAction::triggered, this, &MainWindow::close);
 
+  mActionChartChannels = new QAction(tr("Channels"), this);
+  mActionChartChannels->setShortcut(tr("Ctrl+ALT+P"));
+  mActionChartChannels->setStatusTip(tr("Plot channels"));
+  connect(mActionChartChannels, &QAction::triggered, this, &MainWindow::plotChannels);
+
+  mActionChartShots = new QAction(tr("Shots"), this);
+  mActionChartShots->setShortcut(tr("Ctrl+ALT+S"));
+  mActionChartShots->setStatusTip(tr("Plot shots"));
+  connect(mActionChartShots, &QAction::triggered, this, &MainWindow::plotShots);
+
   mActionCut = new QAction(QIcon(myIconPath+"/mActionEditCut.png"), tr("Cu&t"), this);
   mActionCut->setShortcut(tr("Ctrl+X"));
   mActionCut->setStatusTip(tr("Cut the current selection's contents to the clipboard"));
@@ -168,6 +178,10 @@ void MainWindow::createToolBars()
   mFileToolBar->addSeparator();
   mFileToolBar->addAction(mActionClose);
 
+  mChartToolBar = addToolBar(tr("Chart"));
+  mChartToolBar->addAction(mActionChartChannels);
+  mChartToolBar->addAction(mActionChartShots);
+
   mEditToolBar = addToolBar(tr("Edit"));
   mEditToolBar->addAction(mActionCut);
   mEditToolBar->addAction(mActionCopy);
@@ -217,5 +231,16 @@ void MainWindow::openFile()
 
 void MainWindow::closeFile()
 {
-  emit dataUnloaded();
+    emit dataUnloaded();
+}
+
+void MainWindow::plotChannels()
+{
+    mCVWindow = new ChartViewWindow(this);
+    mCVWindow->show();
+}
+
+void MainWindow::plotShots()
+{
+
 }

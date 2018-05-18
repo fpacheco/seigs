@@ -4,7 +4,11 @@
 #include <QDialog>
 #include <QChart>
 #include <QChartView>
+#include <QMap>
+//
+#include <QtCharts>
 
+//using namespace QtCharts;
 
 namespace Ui {
   class ChartViewWindow;
@@ -20,6 +24,15 @@ public:
 
 private:
   Ui::ChartViewWindow *ui;
+  // Line series
+  // Channels
+  QtCharts::QLineSeries *mLChanNS;
+  QtCharts::QLineSeries *mLChanEW;
+  QtCharts::QLineSeries *mLChanZ;
+  QtCharts::QLineSeries *mLChanTri;
+  // Shots
+  QMap<int, QLineSeries *> mLShots;
+
 };
 
 #endif // CHARTVIEWWINDOW_H

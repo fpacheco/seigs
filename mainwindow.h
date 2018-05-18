@@ -7,6 +7,7 @@
 #include <QChartView>
 //
 #include "seisline.h"
+#include "chartviewwindow.h"
 
 namespace Ui {
   class MainWindow;
@@ -38,6 +39,8 @@ private:
 public slots:
   void openFile();
   void closeFile();
+  void plotChannels();
+  void plotShots();
 
 signals:
   void dataLoaded(QString filePath);
@@ -63,6 +66,8 @@ private:
   /// Toolbars
   QToolBar *mFileToolBar;
   QToolBar *mEditToolBar;
+  QToolBar *mChartToolBar;
+
   /// Plugins
   // QToolBar *mPluginToolBar;
 
@@ -85,9 +90,12 @@ private:
   QAction *mActionCopy;
   QAction *mActionPaste;
   QAction *mActionShowPluginManager;
-
   QAction *mActionAbout;
   QAction *mActionAboutQt;
+
+  // Plot actions
+  QAction *mActionChartChannels;
+  QAction *mActionChartShots;
 
   //Database basic actions
   QAction *mActionDBPointCreate;
@@ -104,7 +112,7 @@ private:
 
   // The data
   SeisLine *mSline;
-
+  ChartViewWindow *mCVWindow;
 };
 
 #endif // MAINWINDOW_H
