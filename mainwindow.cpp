@@ -2,6 +2,7 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QToolBar>
+#include <QMenuBar>
 
 
 #include "mainwindow.h"
@@ -61,7 +62,7 @@ void MainWindow::createActions()
   mActionExit = new QAction(tr("E&xit"), this);
   mActionExit->setShortcut(tr("Ctrl+Q"));
   mActionExit->setStatusTip(tr("Exit the application"));
-  connect(mActionExit, SIGNAL(triggered()), this, SLOT(close()));
+  connect(mActionExit, &QAction::triggered, this, &MainWindow::close);
 
   mActionCut = new QAction(QIcon(myIconPath+"/mActionEditCut.png"), tr("Cu&t"), this);
   mActionCut->setShortcut(tr("Ctrl+X"));
@@ -129,8 +130,6 @@ void MainWindow::createActions()
   mActionDBProjectDelete->setStatusTip(tr("Delete groups in the current database"));
   connect(mActionDBProjectDelete, SIGNAL(triggered()), this, SLOT(dbProjectDelete()));
 
-
-
   mActionCut->setEnabled(false);
   mActionCopy->setEnabled(false);
   //connect(mTextEdit, SIGNAL(copyAvailable(bool)),mActionCut, SLOT(setEnabled(bool)));
@@ -144,7 +143,7 @@ void MainWindow::createMenus()
   //mFileMenu->addAction(mActionNew);
   mFileMenu->addAction(mActionOpen);
   mFileMenu->addAction(mActionSave);
-  mFileMenu->addAction(mActionSaveAs);
+  //mFileMenu->addAction(mActionSaveAs);
   mFileMenu->addAction(mActionClose);
   mFileMenu->addSeparator();
   mFileMenu->addAction(mActionExit);
@@ -153,35 +152,6 @@ void MainWindow::createMenus()
   mEditMenu->addAction(mActionCut);
   mEditMenu->addAction(mActionCopy);
   mEditMenu->addAction(mActionPaste);
-
-  /*
-  qDebug() << "Creating database menus ... ";
-  qDebug() << "Points ... ";
-  mDatabaseMenu = menuBar()->addMenu(tr("&Database"));
-  mDatabaseMenuPoints = mDatabaseMenu->addMenu(tr("Po&ints"));
-  mDatabaseMenuPoints->addAction(mActionDBPointCreate);
-  mDatabaseMenuPoints->addAction(mActionDBPointEdit);
-  mDatabaseMenuPoints->addAction(mActionDBPointDelete);
-
-  qDebug() << "Groups ... ";
-  mDatabaseMenuGroups = mDatabaseMenu->addMenu(tr("&Groups"));
-  mDatabaseMenuGroups->addAction(mActionDBGroupCreate);
-  mDatabaseMenuGroups->addAction(mActionDBGroupEdit);
-  mDatabaseMenuGroups->addAction(mActionDBGroupDelete);
-
-  qDebug() << "Projects ... ";
-  mDatabaseMenuProjects = mDatabaseMenu->addMenu(tr("P&rojects"));
-  mDatabaseMenuProjects->addAction(mActionDBProjectCreate);
-  mDatabaseMenuProjects->addAction(mActionDBProjectEdit);
-  mDatabaseMenuProjects->addAction(mActionDBProjectDelete);
-
-  mPluginMenu = menuBar()->addMenu(tr("&Plugins"));
-  mPluginMenu->addAction(mActionShowPluginManager);
-#ifdef HAVE_PYTHON
-  //mPluginMenu->addAction(mActionShowPythonDialog);
-#endif
-  mPluginMenu->addSeparator();
-  */
 
   menuBar()->addSeparator();
 
@@ -193,7 +163,6 @@ void MainWindow::createMenus()
 void MainWindow::createToolBars()
 {
   mFileToolBar = addToolBar(tr("File"));
-  //mFileToolBar->addAction(mActionNew);
   mFileToolBar->addAction(mActionOpen);
   mFileToolBar->addAction(mActionSave);
   mFileToolBar->addSeparator();
@@ -203,8 +172,6 @@ void MainWindow::createToolBars()
   mEditToolBar->addAction(mActionCut);
   mEditToolBar->addAction(mActionCopy);
   mEditToolBar->addAction(mActionPaste);
-
-  // mPluginToolBar = addToolBar(tr("Plugins"));
 }
 
 void MainWindow::createStatusBar()
@@ -214,16 +181,16 @@ void MainWindow::createStatusBar()
 
 void MainWindow::readSettings()
 {
-  QSettings settings("Trolltech", "Application Example");
+  QSettings settings("Ingesur SRL", "SeIGS");
   QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
   QSize size = settings.value("size", QSize(400, 400)).toSize();
-  resize(size);
-  move(pos);
+  //resize(size);
+  //move(pos);
 }
 
 void MainWindow::writeSettings()
 {
-  QSettings settings("Trolltech", "Application Example");
+  QSettings settings("Ingesur SRL", "SeIGS");
   settings.setValue("pos", pos());
   settings.setValue("size", size());
 }

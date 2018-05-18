@@ -27,12 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     seisline.cpp \
-    seisdata.cpp
+    seisdata.cpp \
+    chartviewwindow.cpp
 
 HEADERS += \
         mainwindow.h \
     seisline.h \
-    seisdata.h
+    seisdata.h \
+    chartviewwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    chartviewwindow.ui

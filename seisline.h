@@ -23,9 +23,16 @@ End recording:   	16/05/18 17:18:51
 Trace length:     	0h20'00''
  */
 
-const float MIN_SHOT_RESPONSE = 300.0;
-const float DEFAULT_PRE_MULT = 0.5;
-const float DEFAULT_POST_MULT = 2.0;
+const double MIN_SHOT_RESPONSE = 300.0;
+const double DEFAULT_PRE_MULT = 0.5;
+const double DEFAULT_POST_MULT = 2.0;
+
+const QString SITE_ID="Site ID";
+const QString INSTRUMENT="Instrument";
+const QString NUM_CHANNELS="No. of channels";
+const QString SAMP_RATE="Sampling rate";
+const QString START_RECORD="Start recording";
+const QString END_RECORD="End recording";
 
 class SeisLine
 {
@@ -60,8 +67,9 @@ private:
 
     QString mSiteId; //! Site Id
     QString mInstId; //! Instrument Id
-    QDateTime mIDT; //! Init date time
-    QDateTime mEDT; //! End date time
+    int mNumChan;
+    QDateTime mStartDT; //! Init date time
+    QDateTime mStopDT; //! End date time
     int mSampRate; //! Sample rate in Hz
 
     QVector<float> mShotDist; //! Sample rate in Hz
