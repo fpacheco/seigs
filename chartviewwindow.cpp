@@ -1,45 +1,90 @@
+#include <QVBoxLayout>
+
 #include "chartviewwindow.h"
-#include "ui_chartviewwindow.h"
 
-ChartViewWindow::ChartViewWindow(QWidget *parent) :
-  QDialog(parent),
-  ui(new Ui::ChartViewWindow)
+ChartViewWindow::ChartViewWindow(QWidget *parent) : QWidget(parent)
 {
-  ui->setupUi(this);
+    QtCharts::QLineSeries *series = new QtCharts::QLineSeries();
+    series->append(0, 6);
+    series->append(0.110, 3.22);
+    series->append(2.23, 4.56);
+    series->append(3, 8);
+    series->append(7, 4);
+    series->append(10, 5);
+    *series << QPointF(11.14, 1) << QPointF(13.45, 3) << QPointF(17.22, 6) << QPointF(18.33, 3) << QPointF(20, 2);
 
-  QLineSeries *series = new QLineSeries();
+    QtCharts::QChart *mChartNS = new QtCharts::QChart();
+    mChartNS->legend()->hide();
+    mChartNS->addSeries(series);
+    mChartNS->createDefaultAxes();
+    mChartNS->setTitle("NS signal");
 
-  series->append(0, 6);
-  series->append(0.110, 3.22);
-  series->append(2.23, 4.56);
-  series->append(3, 8);
-  series->append(7, 4);
-  series->append(10, 5);
-  *series << QPointF(11.14, 1) << QPointF(13.45, 3) << QPointF(17.22, 6) << QPointF(18.33, 3) << QPointF(20, 2);
+    QtCharts::QChart *mChartEW = new QtCharts::QChart();
+    mChartEW->legend()->hide();
+    mChartEW->addSeries(series);
+    mChartEW->createDefaultAxes();
+    mChartEW->setTitle("EW signal");
 
-  QChart *chart = new QChart();
-  chart->legend()->hide();
-  chart->addSeries(series);
-  chart->createDefaultAxes();
-  chart->setTitle("Simple line chart example");
+    QtCharts::QChart *mChartZ = new QtCharts::QChart();
+    mChartZ->legend()->hide();
+    mChartZ->addSeries(series);
+    mChartZ->createDefaultAxes();
+    mChartZ->setTitle("Z signal");
 
-  //QChartView *chartView = new QChartView(chart);
+    QtCharts::QChart *mChartTri = new QtCharts::QChart();
+    mChartTri->legend()->hide();
+    mChartTri->addSeries(series);
+    mChartTri->createDefaultAxes();
+    mChartTri->setTitle("Trigger signal");
 
-  QChartView *nsCView = new QChartView(chart);
-  QChartView *ewCView = new QChartView(chart);
-  QChartView *zCView = new QChartView(chart);
-  QChartView *triCView = new QChartView(chart);
+    //QChartView *chartView = new QChartView(chart);
+
+    mCVNS = new QChartView(mChartNS);
+    //mCVNS->setChart(mChartNS);
+    mCVNS->setRenderHint(QPainter::Antialiasing);
+    mCVNS->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //mCVNS->setLayout(vbox);
+
+    mCVEW = new QChartView(mChartEW);
+    //mCVEW->setChart(mChartEW);
+    mCVEW->setRenderHint(QPainter::Antialiasing);
+    mCVEW->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //mCVEW->setLayout(vbox);
+
+    mCVZ = new QChartView(mChartZ);
+    //mCVZ->setChart(mChartZ);
+    mCVZ->setRenderHint(QPainter::Antialiasing);
+    //mCVZ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    mCVTri = new QChartView(mChartTri);
+    //mCVTri->setChart(mChartTri);
+    mCVTri->setRenderHint(QPainter::Antialiasing);
+    //mCVTri->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QVBoxLayout *vbox = new QVBoxLayout(this);
+    vbox->setSpacing(0);
+    vbox->setContentsMargins(0,0,0,0);
+
+    vbox->addWidget(mCVNS);
+    vbox->addWidget(mCVEW);
+    vbox->addWidget(mCVZ);
+    vbox->addWidget(mCVTri);
+
+    // Layout
+    setContentsMargins(0,0,0,0);
+    setLayout(vbox);
 
 
-  ui->chartView->setChart(chart);
-  ui->chartView->setRenderHint(QPainter::Antialiasing);
+    //setCentralWidget(vbox);
 
-  // setCentralWidget(chartView);
-  // resize(400, 300);
-  // show();
+    //ui->chartView->setChart(chart);
+    //ui->chartView->setRenderHint(QPainter::Antialiasing);
+    // setCentralWidget(vbox);
+    // resize(400, 300);
+    // show();
 }
 
 ChartViewWindow::~ChartViewWindow()
 {
-  delete ui;
+
 }

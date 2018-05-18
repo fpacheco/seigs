@@ -40,5 +40,4 @@ HEADERS += \
     chartviewwindow.h
 
 FORMS += \
-        mainwindow.ui \
-    chartviewwindow.ui
+        mainwindow.ui

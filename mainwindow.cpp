@@ -236,8 +236,12 @@ void MainWindow::closeFile()
 
 void MainWindow::plotChannels()
 {
-    mCVWindow = new ChartViewWindow(this);
+    mCVWindow = new ChartViewWindow(Q_NULLPTR);
+    mCVWindow->setWindowState(Qt::WindowMaximized);
+    //mCVWindow->setPosition(200,200);
+    // mCVWindow->setWindowTitle("VerticalBox");
     mCVWindow->show();
+    qDebug() << "Show????";
 }
 
 void MainWindow::plotShots()

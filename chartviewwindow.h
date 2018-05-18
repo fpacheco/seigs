@@ -1,38 +1,41 @@
 #ifndef CHARTVIEWWINDOW_H
 #define CHARTVIEWWINDOW_H
 
-#include <QDialog>
+#include <QWidget>
 #include <QChart>
 #include <QChartView>
 #include <QMap>
 //
 #include <QtCharts>
 
-//using namespace QtCharts;
-
-namespace Ui {
-  class ChartViewWindow;
-}
-
-class ChartViewWindow : public QDialog
+class ChartViewWindow : public QWidget
 {
-  Q_OBJECT
-
 public:
-  explicit ChartViewWindow(QWidget *parent = 0);
-  ~ChartViewWindow();
+    ChartViewWindow(QWidget *parent);
+    ~ChartViewWindow();
 
 private:
-  Ui::ChartViewWindow *ui;
-  // Line series
-  // Channels
-  QtCharts::QLineSeries *mLChanNS;
-  QtCharts::QLineSeries *mLChanEW;
-  QtCharts::QLineSeries *mLChanZ;
-  QtCharts::QLineSeries *mLChanTri;
-  // Shots
-  QMap<int, QLineSeries *> mLShots;
+    // Line series
+    // Channels
+    QtCharts::QLineSeries *mLChanNS;
+    QtCharts::QLineSeries *mLChanEW;
+    QtCharts::QLineSeries *mLChanZ;
+    QtCharts::QLineSeries *mLChanTri;
+    QVector<QtCharts::QLineSeries *> mLShots;
 
+    // Charts
+    QtCharts::QChart *mChartNS;
+    QtCharts::QChart *mChartEW;
+    QtCharts::QChart *mChartZ;
+    QtCharts::QChart *mChartTri;
+    QVector<QtCharts::QChart *> mChartShots;
+
+    // Views
+    QtCharts::QChartView *mCVNS;
+    QtCharts::QChartView *mCVEW;
+    QtCharts::QChartView *mCVZ;
+    QtCharts::QChartView *mCVTri;
+    QVector<QtCharts::QChartView *> mCVShots;
 };
 
-#endif // CHARTVIEWWINDOW_H
+#endif // CHARTSVIEWWINDOW_H
