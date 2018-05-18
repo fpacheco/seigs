@@ -1,28 +1,31 @@
 #include <QDebug>
 #include <QSettings>
+#include <QFileDialog>
+#include <QToolBar>
+
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+  QMainWindow(parent),
+  ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
-    createActions();
-    createMenus();
-    createToolBars();
-    createStatusBar();
-
-
-    ///@todo Eliminated?
-    readSettings();
+  ui->setupUi(this);
+  // Maximize
+  setWindowState(Qt::WindowMaximized);
+  // Create
+  createActions();
+  createMenus();
+  createToolBars();
+  createStatusBar();
+  ///@todo Eliminated?
+  readSettings();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+  delete ui;
 }
 
 void MainWindow::createActions()
@@ -38,21 +41,22 @@ void MainWindow::createActions()
 
   mActionOpen = new QAction(QIcon(myIconPath+"/mActionFileOpen.png"), tr("&Open..."), this);
   mActionOpen->setShortcut(tr("Ctrl+O"));
-  mActionOpen->setStatusTip(tr("Open an existing MIIH file"));
-  connect(mActionOpen, SIGNAL(triggered()), this, SLOT(openDB()));
+  mActionOpen->setStatusTip(tr("Open ASCII sesimic file"));
+  //connect(mActionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+  connect(mActionOpen, &QAction::triggered, this, &MainWindow::openFile);
 
   mActionSave = new QAction(QIcon(myIconPath+"/mActionFileSave.png"), tr("&Save"),this);
   mActionSave->setShortcut(tr("Ctrl+S"));
   mActionSave->setStatusTip(tr("Save the document to disk"));
-  connect(mActionSave, SIGNAL(triggered()), this, SLOT(save()));
+  //connect(mActionSave, &QAction::triggered, this, &MainWindow::save);
 
   mActionSaveAs = new QAction(QIcon(myIconPath+"/mActionFileSaveAs.png"),tr("Save &As..."), this);
   mActionSaveAs->setStatusTip(tr("Save the actual MIIH under a new name"));
   connect(mActionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
 
-  mActionClose = new QAction(QIcon(myIconPath+"/mActionClose.png"),tr("C&lose database"), this);
-  mActionClose->setStatusTip(tr("Close the MIIH database"));
-  connect(mActionClose, SIGNAL(triggered()), this, SLOT(closeDB()));
+  mActionClose = new QAction(QIcon(myIconPath+"/mActionClose.png"),tr("C&lose"), this);
+  mActionClose->setStatusTip(tr("Close ASCII sesimic file"));
+  connect(mActionClose, &QAction::triggered, this, &MainWindow::closeFile);
 
   mActionExit = new QAction(tr("E&xit"), this);
   mActionExit->setShortcut(tr("Ctrl+Q"));
@@ -72,7 +76,7 @@ void MainWindow::createActions()
   mActionPaste = new QAction(QIcon(myIconPath+"/mActionEditPaste.png"), tr("&Paste"),this);
   mActionPaste->setShortcut(tr("Ctrl+V"));
   mActionPaste->setStatusTip(tr("Paste the clipboard's contents into the"
-  "current selection"));
+                                "current selection"));
   //connect(mActionPaste, SIGNAL(triggered()), mTextEdit, SLOT(paste()));
 
   mActionShowPluginManager = new QAction(QIcon(myIconPath+"/mActionShowPluginManager.png"), tr("Plu&gins"),this);
@@ -137,7 +141,7 @@ void MainWindow::createActions()
 void MainWindow::createMenus()
 {
   mFileMenu = menuBar()->addMenu(tr("&File"));
-  mFileMenu->addAction(mActionNew);
+  //mFileMenu->addAction(mActionNew);
   mFileMenu->addAction(mActionOpen);
   mFileMenu->addAction(mActionSave);
   mFileMenu->addAction(mActionSaveAs);
@@ -150,6 +154,7 @@ void MainWindow::createMenus()
   mEditMenu->addAction(mActionCopy);
   mEditMenu->addAction(mActionPaste);
 
+  /*
   qDebug() << "Creating database menus ... ";
   qDebug() << "Points ... ";
   mDatabaseMenu = menuBar()->addMenu(tr("&Database"));
@@ -176,6 +181,7 @@ void MainWindow::createMenus()
   //mPluginMenu->addAction(mActionShowPythonDialog);
 #endif
   mPluginMenu->addSeparator();
+  */
 
   menuBar()->addSeparator();
 
@@ -186,38 +192,63 @@ void MainWindow::createMenus()
 
 void MainWindow::createToolBars()
 {
-      mFileToolBar = addToolBar(tr("File"));
-      mFileToolBar->addAction(mActionNew);
-      mFileToolBar->addAction(mActionOpen);
-      mFileToolBar->addAction(mActionSave);
-      mFileToolBar->addSeparator();
-      mFileToolBar->addAction(mActionClose);
+  mFileToolBar = addToolBar(tr("File"));
+  //mFileToolBar->addAction(mActionNew);
+  mFileToolBar->addAction(mActionOpen);
+  mFileToolBar->addAction(mActionSave);
+  mFileToolBar->addSeparator();
+  mFileToolBar->addAction(mActionClose);
 
-      mEditToolBar = addToolBar(tr("Edit"));
-      mEditToolBar->addAction(mActionCut);
-      mEditToolBar->addAction(mActionCopy);
-      mEditToolBar->addAction(mActionPaste);
+  mEditToolBar = addToolBar(tr("Edit"));
+  mEditToolBar->addAction(mActionCut);
+  mEditToolBar->addAction(mActionCopy);
+  mEditToolBar->addAction(mActionPaste);
 
-      mPluginToolBar = addToolBar(tr("Plugins"));
+  // mPluginToolBar = addToolBar(tr("Plugins"));
 }
 
 void MainWindow::createStatusBar()
 {
-      statusBar()->showMessage(tr("Ready"));
+  statusBar()->showMessage(tr("Ready"));
 }
 
 void MainWindow::readSettings()
 {
-      QSettings settings("Trolltech", "Application Example");
-      QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-      QSize size = settings.value("size", QSize(400, 400)).toSize();
-      resize(size);
-      move(pos);
+  QSettings settings("Trolltech", "Application Example");
+  QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+  QSize size = settings.value("size", QSize(400, 400)).toSize();
+  resize(size);
+  move(pos);
 }
 
 void MainWindow::writeSettings()
 {
-      QSettings settings("Trolltech", "Application Example");
-      settings.setValue("pos", pos());
-      settings.setValue("size", size());
+  QSettings settings("Trolltech", "Application Example");
+  settings.setValue("pos", pos());
+  settings.setValue("size", size());
+}
+
+void MainWindow::openFile()
+{
+  QString filePath = QFileDialog::getOpenFileName(this);//,tr("Open MIIH database"),QDir::currentPath(),tr("Miih files (*.miih);;All files (*.*)"));
+  ///@todo If database is open
+  if (!filePath.isEmpty()) {
+    mSline = new SeisLine(filePath);
+
+    emit dataLoaded(filePath);
+
+    /*
+    loadDB(fileName);
+    mConnected = true;
+    ///@todo
+    setupPointsTree();
+    //setupGroupsTree();
+    //setupProjectsTree();
+    */
+  }
+}
+
+void MainWindow::closeFile()
+{
+  emit dataUnloaded();
 }
