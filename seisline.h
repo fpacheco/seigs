@@ -56,6 +56,11 @@ public:
     void setShotDistances(QVector<float> shots) { mShotDist = shots; }
     void setShotDistances(float first, float delta, int nShots);
 
+    /* Util functions ... QLineSeries can do void QXYSeries::append(const QList<QPointF> &points) */
+    QList<QPointF> getNE(int from=0, int to=0);
+    QList<QPointF> getEW(int from=0, int to=0);
+    QList<QPointF> getZ(int from=0, int to=0);
+    QList<QPointF> getTri(int from=0, int to=0);
 
 private:
     void readFromFile(QString filePath);
