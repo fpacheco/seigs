@@ -7,6 +7,9 @@
 #include <QMap>
 //
 #include <QtCharts>
+#include "chart.h"
+#include "chartview.h"
+
 
 class ChartViewWindow : public QWidget
 {
@@ -23,12 +26,14 @@ private:
     QtCharts::QLineSeries *mLChanTri;
     QVector<QtCharts::QLineSeries *> mLShots;
 
+    /*
     // Charts
     QtCharts::QChart *mChartNS;
     QtCharts::QChart *mChartEW;
     QtCharts::QChart *mChartZ;
     QtCharts::QChart *mChartTri;
     QVector<QtCharts::QChart *> mChartShots;
+    */
 
     // Views
     QtCharts::QChartView *mCVNS;

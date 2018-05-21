@@ -214,11 +214,11 @@ void MainWindow::openFile()
   QString filePath = QFileDialog::getOpenFileName(this);//,tr("Open MIIH database"),QDir::currentPath(),tr("Miih files (*.miih);;All files (*.*)"));
   ///@todo If database is open
   if (!filePath.isEmpty()) {
-    mSline = new SeisLine(filePath);
+      mSline = new SeisLine(filePath);
 
-    emit dataLoaded(filePath);
+      emit dataLoaded(filePath);
 
-    /*
+      /*
     loadDB(fileName);
     mConnected = true;
     ///@todo
@@ -226,22 +226,35 @@ void MainWindow::openFile()
     //setupGroupsTree();
     //setupProjectsTree();
     */
-  }
+    }
 }
 
 void MainWindow::closeFile()
 {
-    emit dataUnloaded();
+  emit dataUnloaded();
 }
+
+/*
+void MainWindow::dataLoaded(QString filePath)
+{
+  qDebug() << "dataLoaded signal: " << filePath;
+}
+
+void MainWindow::dataUnloaded()
+{
+  qDebug() << "dataUnloaded signal";
+}
+*/
 
 void MainWindow::plotChannels()
 {
-    mCVWindow = new ChartViewWindow(Q_NULLPTR);
-    mCVWindow->setWindowState(Qt::WindowMaximized);
-    //mCVWindow->setPosition(200,200);
-    // mCVWindow->setWindowTitle("VerticalBox");
-    mCVWindow->show();
-    qDebug() << "Show????";
+  // mCVWindow es un QWidget. Si le doy un parent (this)
+  // debo ponerle el flag Qt::Window
+  mCVWindow = new ChartViewWindow(this);
+  mCVWindow->setWindowFlag(Qt::Window);
+  mCVWindow->setWindowState(Qt::WindowMaximized);
+  mCVWindow->setWindowTitle("VerticalBox");
+  mCVWindow->show();
 }
 
 void MainWindow::plotShots()
