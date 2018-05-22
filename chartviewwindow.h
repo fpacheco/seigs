@@ -36,11 +36,11 @@ private:
     */
 
     // Views
-    QtCharts::QChartView *mCVNS;
-    QtCharts::QChartView *mCVEW;
-    QtCharts::QChartView *mCVZ;
-    QtCharts::QChartView *mCVTri;
-    QVector<QtCharts::QChartView *> mCVShots;
+    ChartView *mCVNS;
+    ChartView *mCVEW;
+    ChartView *mCVZ;
+    ChartView *mCVTri;
+    QVector<ChartView *> mCVShots;
 };
 
 #endif // CHARTSVIEWWINDOW_H

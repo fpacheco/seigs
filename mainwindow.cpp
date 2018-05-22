@@ -259,5 +259,10 @@ void MainWindow::plotChannels()
 
 void MainWindow::plotShots()
 {
-
+    /*
+    SignalWindow * sw = new SignalWindow(this);
+    sw->setWindowFlag(Qt::Window);
+    sw->setWindowState(Qt::WindowMaximized);
+    sw->show();
+    */
 }
