@@ -5,6 +5,10 @@ ChartView::ChartView(QChart *chart, QWidget *parent) :
   QChartView(chart, parent),
   m_isTouching(false)
 {
+
+  setMinimumSize(QSize(0,0));
+  setMaximumSize(QSize(1000000,1000000));
+
   setRubberBand(QChartView::RectangleRubberBand);
 }
 
